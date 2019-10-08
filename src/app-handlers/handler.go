@@ -8,6 +8,7 @@ import (
 
 	"github.com/Oleg-Skalozub/testtask/src/domain/services"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errorscan"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/logger"
 )
 
 // Handler ...
@@ -17,12 +18,14 @@ type Handler interface {
 
 type handler struct {
 	service services.Fetcher
+	log     logger.Logger
 }
 
 // NewHandler ...
 func NewHandler() Handler {
 	return &handler{
 		service: services.NewFetch(),
+		log:     logger.Log,
 	}
 }
 
@@ -33,18 +36,21 @@ func (h handler) Request(w http.ResponseWriter, r *http.Request) {
 
 	monthTime, dayTime, err := validation(day, month)
 	if err != nil {
+		h.log.Error(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 
 	data, err := h.service.FetchData(monthTime, dayTime)
 	if err != nil {
+		h.log.Error(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}
 
 	res, err := json.Marshal(data)
 	if err != nil {
+		h.log.Error(err.Error())
 		w.Write([]byte(err.Error()))
 		return
 	}

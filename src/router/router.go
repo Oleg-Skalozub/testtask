@@ -1,7 +1,7 @@
 package router
 
 import (
-	apphandlers "github.com/Oleg-Skalozub/testtask/src/app-handlers"
+	"github.com/Oleg-Skalozub/testtask/src/app-handlers"
 	"github.com/gorilla/mux"
 )
 

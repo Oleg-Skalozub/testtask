@@ -1,0 +1,17 @@
+
+# Output of the go coverage tool
+src/static-analysis.xml
+
+vendor/
+
+# IDEs:
+.idea/
+.vscode/
+
+# logs:
+*.log
+*.log.*
+
+# xml:
+*.xml
+*.sum

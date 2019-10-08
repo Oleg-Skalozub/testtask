@@ -5,7 +5,7 @@ import (
 )
 
 // SqlBD ...
-type SqlBD interface {
+type SQLBDer interface {
 	Save(interface{}) error
 	Close() error
 	Select(query interface{}, args ...interface{}) *gorm.DB

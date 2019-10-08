@@ -7,7 +7,7 @@ import (
 
 // DataRepository ...
 type DataRepository struct {
-	db db.SqlBD
+	db db.SQLBDer
 }
 
 // NewDataRepository ...

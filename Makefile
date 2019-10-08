@@ -28,3 +28,11 @@ mocks:
 .PHONY: lint
 lint:
 	golangci-lint run
+
+.PHONY: code-quality
+code-quality:
+	golangci-lint --exclude-use-default=false --out-format checkstyle run ./... > static-analysis.xml
+
+.PHONY: code-quality-print
+code-quality-print:
+	golangci-lint --exclude-use-default=false  --out-format tab run ./...

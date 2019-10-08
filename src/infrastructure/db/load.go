@@ -2,12 +2,15 @@ package db
 
 import (
 	"fmt"
-	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/lib/pq"
+
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
 )
 
-var SQLBD SqlBD
+// SQLBD main object for working with DB
+var SQLBD SQLBDer
 
 // Load ...
 func Load() error {
