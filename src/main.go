@@ -2,12 +2,16 @@ package main
 
 import (
 	"flag"
-	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
-	"github.com/Oleg-Skalozub/testtask/src/infrastructure/load"
-	"github.com/Oleg-Skalozub/testtask/src/router"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/load"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/logger"
+	"github.com/Oleg-Skalozub/testtask/src/router"
+
+	"github.com/urfave/negroni"
 )
 
 var configFile *string
@@ -30,5 +34,15 @@ func main() {
 	}
 
 	r := router.NewRouter()
-	log.Fatal(http.ListenAndServe(":3000", r))
+
+	n := negroni.New()
+	n.Use(negroni.NewRecovery())
+	rLog := negroni.NewLogger()
+	rLog.SetFormat("[{{.Status}} {{.Duration}} {{.Method}}  {{.Path}}] - {{.Request.UserAgent}}")
+	rLog.ALogger = logger.Log
+
+	n.Use(rLog)
+	n.UseHandler(r)
+
+	log.Fatal(http.ListenAndServe(":3000", n))
 }

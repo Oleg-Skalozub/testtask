@@ -2,8 +2,10 @@ package load
 
 import (
 	"fmt"
+
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/db"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/logger"
 
 	"github.com/pkg/errors"
 )
@@ -18,6 +20,7 @@ type LoaderList []struct {
 // Order of loaders matters!
 var Loaders = LoaderList{
 	{"config", config.Load},
+	{"logger", logger.Load},
 	{"sqlbd", db.Load},
 }
 
