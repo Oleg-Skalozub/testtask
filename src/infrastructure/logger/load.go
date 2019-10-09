@@ -1,7 +1,6 @@
 package logger
 
 import (
-	"github.com/davecgh/go-spew/spew"
 	"log"
 	"os"
 )
@@ -18,10 +17,6 @@ func Load() error {
 	}
 
 	log.SetOutput(file)
-
-	if err != nil {
-		spew.Dump(err)
-	}
 	logg := log.New(file, "test_task", log.Lshortfile)
 	logg.SetFlags(1)
 	Log = &logger{logMain: logg}

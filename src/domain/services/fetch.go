@@ -2,6 +2,7 @@ package services
 
 import (
 	"reflect"
+	"strconv"
 	"sync"
 
 	"github.com/Oleg-Skalozub/testtask/src/domain/entity"
@@ -61,7 +62,10 @@ func (f fetch) FetchData(day, month int) ([]entity.DataResponse, error) {
 
 		go f.SaveData(iventType, day, month, dataProcess)
 
-		data = append(data, entity.DataResponse{iventType, len(dataProcess)})
+		data = append(data, entity.DataResponse{
+			EventType: entity.TaskingNameTypeMap[iventType],
+			Result:    len(dataProcess),
+		})
 	}
 	wg.Wait()
 
@@ -84,10 +88,19 @@ func (f fetch) GetData(day, month int) ([]entity.DataResponse, error) {
 		return nil, err
 	}
 
-	for _, dat := range data {
-		if dat.Result != 0 {
-			return data, nil
+	cash := false
+	for i, dat := range data {
+		res, err := strconv.Atoi(dat.EventType)
+		if err != nil {
+			return nil, err
 		}
+		data[i].EventType = entity.TaskingNameTypeMap[res]
+		if dat.Result != 0 {
+			cash = true
+		}
+	}
+	if cash == true {
+		return data, nil
 	}
 
 	return nil, errorscan.EmptyResultError
