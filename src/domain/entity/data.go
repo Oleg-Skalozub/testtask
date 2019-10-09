@@ -14,6 +14,12 @@ const (
 
 const TableName = "data_dbs"
 
+var TaskingNameTypeMap = map[int]string{
+	EventType: EventTypeName,
+	BirthType: BirthTypeName,
+	DeathType: DeathTypeName,
+}
+
 var TaskingTypeNameMap = map[string]int{
 	EventTypeName: EventType,
 	BirthTypeName: BirthType,
@@ -54,6 +60,6 @@ type DataDB struct {
 }
 
 type DataResponse struct {
-	Type   int `json:"type"`
-	Result int `json:"result"`
+	EventType string `json:"event_type"`
+	Result    int    `json:"result"`
 }

@@ -1,9 +1,13 @@
 package services
 
 import (
+	"strconv"
+
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errorscan"
 	"github.com/Oleg-Skalozub/testtask/src/mock"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/jinzhu/gorm"
+
 	"testing"
 
 	"github.com/Oleg-Skalozub/testtask/src/domain/entity"
@@ -99,6 +103,7 @@ func TestFetch_GetData(t *testing.T) {
 
 	for _, tc := range testCases {
 
+		spew.Dump(mocks.ArrayDataResponse)
 		if tc.dbError == nil && tc.err == nil {
 			repo.EXPECT().GetData(gomock.Any(), gomock.Any()).Return(mocks.ArrayDataResponse, nil)
 		} else if tc.err != nil && tc.dbError == nil {
@@ -107,9 +112,14 @@ func TestFetch_GetData(t *testing.T) {
 			repo.EXPECT().GetData(gomock.Any(), gomock.Any()).Return(nil, tc.dbError)
 		}
 
+		// Restore mock data
+		for key, _ := range mocks.ArrayDataResponse {
+			mocks.ArrayDataResponse[key].EventType = strconv.Itoa(key + 1)
+		}
 		_, err := fetch.GetData(3, 4)
 
 		if tc.dbError == nil && tc.err == nil {
+
 			if err != nil {
 				t.Error(err)
 			}
