@@ -1,9 +1,13 @@
 {
-  "db_dialect": "postgres",
-  "db_host": "localhost",
-  "db_port": 5432,
-  "db_name": "test",
-  "db_user": "user",
-  "db_password": "example",
+  "bd_config": {
+    "db_dialect": "postgres",
+    "db_host": "localhost",
+    "db_port": 5432,
+    "db_name": "test",
+    "db_user": "user",
+    "db_password": "example",
+    "db_conn": 10,
+    "db_idle_conn": 10
+  },
   "api_route": "https://history.muffinlabs.com/date"
 }
