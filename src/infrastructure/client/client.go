@@ -22,6 +22,7 @@ type client struct {
 	config config.Configuration
 }
 
+// NewClient ...
 func NewClient() ClientInterface {
 	return client{
 		config: config.Config,
@@ -36,8 +37,8 @@ func (c client) Get(path string, day, month int) (entity.Contain, error) {
 	if err != nil {
 		return entity.Contain{}, err
 	}
-
 	defer resp.Body.Close()
+
 	if resp.StatusCode != http.StatusOK {
 		return entity.Contain{}, errorscan.WrongStatusCodeError
 	}
