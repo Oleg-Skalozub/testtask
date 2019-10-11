@@ -5,8 +5,10 @@ var FilePath = ""
 
 // Configuration ...
 type Configuration struct {
-	DBConfig DBConfig `json:"bd_config"`
-	ApiRoute string   `json:"api_route"`
+	DBConfig   DBConfig  `json:"bd_config"`
+	ApiRoute   string    `json:"api_route"`
+	ServerPort int       `json:"server_port"`
+	LogConfig  LogConfig `json:"logger_config"`
 }
 
 // DBConfig ...
@@ -19,4 +21,10 @@ type DBConfig struct {
 	DBPassword string `json:"db_password"`
 	DBConn     int    `json:"db_conn"`
 	DBIdleConn int    `json:"db_idle_conn"`
+}
+
+// LogConfig ...
+type LogConfig struct {
+	Prefix   string `json:"prefix"`
+	FileName string `json:"file_name"`
 }

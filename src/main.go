@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/load"
@@ -44,5 +45,5 @@ func main() {
 	n.Use(rLog)
 	n.UseHandler(r)
 
-	log.Fatal(http.ListenAndServe(":3000", n))
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(config.Config.ServerPort), n))
 }

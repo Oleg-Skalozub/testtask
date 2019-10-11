@@ -9,5 +9,10 @@
     "db_conn": 10,
     "db_idle_conn": 10
   },
+  "logger_config" : {
+    "prefix" : "test_task",
+    "file_name" : "logs.txt"
+  },
+  "server_port" : 3000,
   "api_route": "https://history.muffinlabs.com/date"
 }

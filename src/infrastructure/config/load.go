@@ -9,6 +9,7 @@ import (
 
 var Config Configuration
 
+// Load ...
 func Load() error {
 	_, err := loadConfigFile(FilePath)
 	return err
