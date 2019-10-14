@@ -3,7 +3,7 @@ package services
 import (
 	"strconv"
 
-	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errorscan"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errscan"
 	"github.com/Oleg-Skalozub/testtask/src/mock"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/jinzhu/gorm"
@@ -31,15 +31,15 @@ func TestFetch_FetchData(t *testing.T) {
 		err     error
 	}{
 		{"test without errors", nil, nil},
-		{"test with DB error", errorscan.BigDayValueError, nil},
-		{"test with DB error", errorscan.EmptyResultError, nil},
+		{"test with DB error", errscan.BigDayValueError, nil},
+		{"test with DB error", errscan.EmptyResultError, nil},
 	}
 
 	for _, tc := range testCases {
 		if tc.dbError == nil && tc.err == nil {
 			repo.EXPECT().GetData(gomock.Any(), gomock.Any()).Return(mocks.ArrayDataResponse, nil)
 
-		} else if tc.dbError == errorscan.EmptyResultError {
+		} else if tc.dbError == errscan.EmptyResultError {
 			repo.EXPECT().GetData(gomock.Any(), gomock.Any()).Return(nil, tc.dbError)
 			client.EXPECT().Get(gomock.Any(), gomock.Any(), gomock.Any()).Return(entity.Contain{}, nil)
 		} else if tc.dbError != nil {
@@ -52,7 +52,7 @@ func TestFetch_FetchData(t *testing.T) {
 			if err != nil {
 				t.Error(err)
 			}
-		} else if tc.dbError == errorscan.EmptyResultError {
+		} else if tc.dbError == errscan.EmptyResultError {
 			if err != nil {
 				t.Error(err)
 			}
@@ -97,7 +97,7 @@ func TestFetch_GetData(t *testing.T) {
 		err     error
 	}{
 		{"test without errors", nil, nil},
-		{"test with DB error", errorscan.EmptyResultError, nil},
+		{"test with DB error", errscan.EmptyResultError, nil},
 		{"test with empty result", nil, gorm.ErrInvalidSQL},
 	}
 
