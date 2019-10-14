@@ -7,7 +7,7 @@ import (
 
 	"github.com/Oleg-Skalozub/testtask/src/domain/entity"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
-	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errorscan"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errscan"
 )
 
 //
@@ -40,7 +40,7 @@ func (c client) Get(path string, day, month int) (entity.Contain, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return entity.Contain{}, errorscan.WrongStatusCodeError
+		return entity.Contain{}, errscan.WrongStatusCodeError
 	}
 
 	res := entity.Contain{}

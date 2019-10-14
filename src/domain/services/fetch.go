@@ -9,7 +9,7 @@ import (
 	"github.com/Oleg-Skalozub/testtask/src/domain/repository"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/client"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
-	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errorscan"
+	"github.com/Oleg-Skalozub/testtask/src/infrastructure/errscan"
 )
 
 var wg sync.WaitGroup
@@ -40,7 +40,7 @@ func NewFetch() Fetcher {
 func (f fetch) FetchData(day, month int) ([]entity.DataResponse, error) {
 
 	data, err := f.GetData(day, month)
-	if err != nil && err != errorscan.EmptyResultError {
+	if err != nil && err != errscan.EmptyResultError {
 		return nil, err
 	}
 	if data != nil {
@@ -103,5 +103,5 @@ func (f fetch) GetData(day, month int) ([]entity.DataResponse, error) {
 		return data, nil
 	}
 
-	return nil, errorscan.EmptyResultError
+	return nil, errscan.EmptyResultError
 }

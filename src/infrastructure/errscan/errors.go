@@ -1,4 +1,4 @@
-package errorscan
+package errscan
 
 import "errors"
 

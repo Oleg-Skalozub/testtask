@@ -4,7 +4,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// SqlBD ...
+// SQLBDer ...
 type SQLBDer interface {
 	Save(interface{}) error
 	Close() error
