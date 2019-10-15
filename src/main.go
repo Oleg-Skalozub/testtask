@@ -5,7 +5,9 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"strconv"
+	"syscall"
 
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/config"
 	"github.com/Oleg-Skalozub/testtask/src/infrastructure/load"
@@ -46,4 +48,21 @@ func main() {
 	n.UseHandler(r)
 
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(config.Config.ServerPort), n))
+
+	s := make(chan os.Signal, 1)
+	signal.Notify(s,
+		syscall.SIGHUP,
+		syscall.SIGINT,
+		syscall.SIGTERM,
+		syscall.SIGQUIT)
+	<-s
+
+	log.Println("Stopping application")
+
+	err = load.UnloadApplicationServices()
+	if err != nil {
+		logFatal("Failed to initialize : %v", err)
+	}
+
+	log.Println("Application has been stopped")
 }
