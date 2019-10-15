@@ -18,15 +18,25 @@ type LoaderList []struct {
 
 // BasicLoaders contains load() functions of internal components.
 // Order of loaders matters!
-var Loaders = LoaderList{
-	{"config", config.Load},
-	{"logger", logger.Load},
-	{"sqlbd", db.Load},
-}
+var (
+	Loaders = LoaderList{
+		{"config", config.Load},
+		{"logger", logger.Load},
+		{"sqlbd", db.Load},
+	}
+	Unloaders = LoaderList{
+		{"sqlbd", db.UnLoad},
+	}
+)
 
 // LoadApplicationServices ...
 func LoadApplicationServices() error {
 	return executeLoaders(Loaders)
+}
+
+// UnloadApplicationServices ...
+func UnloadApplicationServices() error {
+	return executeLoaders(Unloaders)
 }
 
 func executeLoaders(loaders LoaderList) error {
