@@ -33,3 +33,11 @@ func TestHandler_Request(t *testing.T) {
 		t.Errorf("expected response code %d, but got %d", http.StatusOK, rr.Code)
 	}
 }
+
+func TestNewHandler(t *testing.T) {
+	realHandler := NewHandler()
+	_, ok := realHandler.(Handler)
+	if !ok {
+		t.Errorf("Handler constructor return not instanse of Handler interfase")
+	}
+}
